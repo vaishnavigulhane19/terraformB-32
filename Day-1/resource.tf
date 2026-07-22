@@ -1,5 +1,5 @@
 resource "aws_instance" "ec2" {
-    ami = "ami-0b1ed96948adabcd9"
+    ami = "ami-01a00762f46d584a1"
     instance_type = "t3.micro"
     key_name = "redhat"
     tags = {
