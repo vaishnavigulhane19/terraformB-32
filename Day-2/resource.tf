@@ -2,8 +2,8 @@ data "aws_vpc" "default" {
   default = true
 }  
 resource "aws_security_group" "sg" {
-    name = "mysg"
-    description = "mysg"
+    name = "mysecurity"
+    description = "mysecurity"
     vpc_id = data.aws_vpc.default.id
 
     ingress {
@@ -28,7 +28,7 @@ resource "aws_security_group" "sg" {
     }
 
     tags = {
-        Name = "mysg"
+        Name = "mysecurity"
     }
 }
 
