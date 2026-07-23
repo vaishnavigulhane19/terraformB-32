@@ -11,9 +11,51 @@ resource "aws_s3_bucket" "bucket" {
 
 resource "aws_s3_object" "object" {
     bucket = aws_s3_bucket.bucket.bucket
-    source = "./file.txt"
-    key = "terraformfile"
+    source = "./index.html"
+    key = "index.html" 
 
+}
+
+resource "aws_s3_bucket_websiteconfiguration" "website" {
+    bucket = aws_s3_bucket.bucket.id
+    index_document {
+        suffix = "index.html"
+    }
+}   
+
+resource "aws_s3_bucket_public_access_block" "public_access" {
+    bucket = aws_s3_bucket.bucket.id
+    block_public_acls = false
+    block_public_policy = false
+    ignore_public_acls = false
+    restrict_public_buckets = false
+
+}
+
+resource "aws_s3_bucket_policy" "policy" {
+
+  bucket = aws_s3_bucket.bucket.id
+
+  depends_on = [
+    aws_s3_bucket_public_access_block.public_access
+  ]
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = "*"
+
+        Action = [
+          "s3:GetObject"
+        ]
+
+        Resource = "${aws_s3_bucket.bucket.arn}/*"
+      }
+    ]
+  })
 }
 
 resource "aws_security_group" "sg" {
@@ -38,7 +80,7 @@ resource "aws_security_group" "sg" {
     egress {
         from_port = 0
         to_port = 0
-        protocol = "tcp"
+        protocol = "-1"
         cidr_blocks = ["0.0.0.0/0"]
 
     }
