@@ -16,7 +16,7 @@ resource "aws_s3_object" "object" {
 
 }
 
-resource "aws_s3_bucket_websiteconfiguration" "website" {
+resource "aws_s3_bucket_website_configuration" "website" {
     bucket = aws_s3_bucket.bucket.id
     index_document {
         suffix = "index.html"
