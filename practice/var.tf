@@ -1,26 +1,11 @@
-variable "ami" {
-    default = "ami-0b1ed96948adabcd9"
+variable "aws_region" {
+    description = "The AWS region to deploy the bucket in"
+    type = string
+    default = "ap-south-1"
+    
 }
 
-variable "instance_type" {
-     default = "t3.micro"
-}
-   
-variable "key_name" {
-    default = "redaht"
-}
-
-variable "volume_type" {
-    default = "t3.micro"
-}
-
-variable "volume_size" {
-    default = 8
-}
-
-variable "tags" {
-    type = map(string)
-    default = {
-        Name = "webserver"
-    }
+variable "bucket_name" {
+    description = "The globally unique name of the S3 bucket"
+    type = string
 }
