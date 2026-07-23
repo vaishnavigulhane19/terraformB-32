@@ -25,7 +25,7 @@ resource "aws_subnet" "private_subnet" {
 }
 
 resource "aws_internet_gateway" "igw" {
-    vpc_id = aws_vpc.my-vpc.id
+    vpc_id = aws_vpc.my_vpc.id
     tags = {
         Name = "igw"
     }
@@ -54,7 +54,7 @@ resource "aws_route_table" "public_rt" {
         }
     }
 
-resource "aws_public_association" "public_asso" {
+resource "aws_route_table_association" "public_asso" {
     subnet_id = aws_subnet.public_subnet.id
     route_table_id = aws_route_table.public_rt.id
 }
@@ -67,7 +67,7 @@ resource "aws_route_table" "private_rt" {
     }
 }
 
-resource "aws_private_association" "private_asso" {
+resource "aws_route_table_association" "private_asso" {
     subnet_id = aws_subnet.private_subnet.id
     route_table_id = aws_route_table.private_rt.id
 }
@@ -80,14 +80,14 @@ resource "aws_security_group" "my_sg" {
     ingress {
         from_port = var.ssh_port
         to_port = var.ssh_port
-        protocol = tcp
+        protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
     
     ingress {
         from_port = var.http_port
         to_port = var.http_port
-        protocol =  tcp
+        protocol =  "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
 
